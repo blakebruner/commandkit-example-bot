@@ -12,12 +12,20 @@
     "format": "prettier --write \"src/**/*.{js,ts}\""
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.4.0",
     "@types/node": "^24.7.2",
+    "eslint": "^9.37.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.1"
   },
   "dependencies": {
     "commandkit": "^1.2.0-rc.12",
-    "discord.js": "^14.23.2"
+    "commandkit-plugin-lavalink-client": "^1.0.7",
+    "discord.js": "^14.23.2",
+    "ioredis": "^5.8.1",
+    "lavalink-client": "^2.6.1"
   }
 }

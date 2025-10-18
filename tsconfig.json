@@ -21,7 +21,12 @@
     "jsxImportSource": "commandkit",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/structures/*": [
+        "src/app/structures/*"
+      ],
     }
   },
   "include": ["src", "commandkit.config.ts", "commandkit-env.d.ts"],
