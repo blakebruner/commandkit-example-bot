@@ -27,9 +27,6 @@ export function startLavalink(client: Client) {
     },
   })
 
-  // forward voice updates to Lavalink
-  client.on("raw", data => lavalink.sendRawData(data))
-
   setLavalinkManager(lavalink)
 
   return lavalink
