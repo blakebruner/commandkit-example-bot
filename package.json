@@ -9,7 +9,7 @@
     "dev": "commandkit dev",
     "build": "commandkit build",
     "start": "commandkit start",
-    "format": "prettier --write \"src/**/*.{js,ts}\""
+    "use:local": "bun remove commandkit-plugin-pagination && bun add ../_packs/commandkit-plugin-pagination-*.tgz"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.4.0",
@@ -23,6 +23,7 @@
   "dependencies": {
     "commandkit": "^1.2.0-rc.12",
     "commandkit-plugin-lavalink-client": "^1.0.7",
+    "commandkit-plugin-pagination": "../_packs/commandkit-plugin-pagination-0.1.1.tgz",
     "discord.js": "^14.23.2",
     "ioredis": "^5.8.1",
     "lavalink-client": "^2.6.1"

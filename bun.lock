@@ -4,6 +4,7 @@
     "": {
       "name": "commandkit-example-bot",
       "dependencies": {
+        "commandkit-plugin-pagination": "../_packs/commandkit-plugin-pagination-0.1.1.tgz",
         "commandkit": "^1.2.0-rc.12",
         "commandkit-plugin-lavalink-client": "^1.0.7",
         "discord.js": "^14.23.2",
@@ -311,6 +312,8 @@
     "commandkit": ["commandkit@1.2.0-rc.12", "", { "dependencies": { "@rollup/plugin-json": "^6.1.0", "chokidar": "^4.0.3", "commander": "^13.0.0", "directive-to-hof": "^0.0.2", "dotenv": "^16.4.7", "ms": "^2.1.3", "ora": "^8.0.1", "picocolors": "^1.1.1", "rfdc": "^1.3.1", "rimraf": "^6.0.0", "tsdown": "^0.15.2", "use-macro": "^1.1.0" }, "bin": { "commandkit": "bin/index.mjs" } }, "sha512-BJEdaKuefbbCfVTHltERPlHP3cXPkvuKy68W+yXzBQqP4DIUGqoSsxUnPPvXztVOmUBnRmrBeJdE3CLbHqkCQA=="],
 
     "commandkit-plugin-lavalink-client": ["commandkit-plugin-lavalink-client@1.0.7", "", {}, "sha512-G4m44n7y3hgPuPzZwTPb6LYYd4EQgrB8SJW/Hhg4FwiQUvvO7uXicoyfCy+RLR0QlJ4ygx5xK+PEfvECWKUmaQ=="],
+
+    "commandkit-plugin-pagination": ["commandkit-plugin-pagination@../_packs/commandkit-plugin-pagination-0.1.1.tgz", { "peerDependencies": { "commandkit": "^1.2.0-rc.11", "discord.js": "^14.22.1" } }],
 
     "concat-map": ["concat-map@0.0.1", "", {}, "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg=="],
 
