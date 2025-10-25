@@ -1,6 +1,4 @@
 import type { ChatInputCommand, CommandData } from "commandkit"
-import type { PaginationPlugin } from "commandkit-plugin-pagination"
-import { ProfileData, ProfileParams } from "../pages/profile"
 
 export const command: CommandData = {
   name: "profile",
@@ -8,21 +6,21 @@ export const command: CommandData = {
 }
 
 export const chatInput: ChatInputCommand = async ctx => {
-  const pagination = ctx.commandkit.plugins.getPlugin("PaginationPlugin") as PaginationPlugin
+  // const pagination = ctx.commandkit.plugins.getPlugin("PaginationPlugin") as PaginationPlugin
 
-  const sessionKey = `profile:${ctx.interaction.user.id}`
+  // const sessionKey = `profile:${ctx.interaction.user.id}`
 
-  await pagination.start<ProfileParams, ProfileData>(
-    "profile",
-    {
-      key: sessionKey,
-      response: ctx.interaction,
-      params: {
-        guildId: ctx.interaction.guildId!,
-        user: ctx.interaction.user,
-      },
-    },
-    { commandkit: ctx.commandkit }
-  )
+  // await pagination.start<ProfileParams, ProfileData>(
+  //   "profile",
+  //   {
+  //     key: sessionKey,
+  //     response: ctx.interaction,
+  //     params: {
+  //       guildId: ctx.interaction.guildId!,
+  //       user: ctx.interaction.user,
+  //     },
+  //   },
+  //   { commandkit: ctx.commandkit }
+  // )
 
 }

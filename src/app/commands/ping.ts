@@ -1,6 +1,7 @@
 import type { ChatInputCommand, CommandData, MessageCommand } from "commandkit"
-import type { PaginationPlugin } from "commandkit-plugin-pagination"
-import { MusicParams, TrackLike } from "../pages/music-queue"
+import { menuManager } from "commandkit-plugin-pagination"
+import { MessageFlags } from "discord.js"
+import { MusicQueueData } from "../pages/music-queue"
 
 export const command: CommandData = {
   name: "ping",
@@ -11,24 +12,23 @@ export const chatInput: ChatInputCommand = async ctx => {
   // const latency = (ctx.client.ws.ping ?? -1).toString()
   // const response = `Pong! Latency: ${latency}ms`
 
-  const pagination = ctx.commandkit.plugins.getPlugin("PaginationPlugin") as PaginationPlugin
-
-  const sessionKey = `music-queue:${ctx.interaction.guildId}`
-
-  await pagination.start<MusicParams, TrackLike>(
-    "music-queue",
-    {
-      key: sessionKey,
-      response: ctx.interaction,
-      params: { guildId: ctx.interaction.guildId! },
+  const { sessionId, menu } = await menuManager.createSession<MusicQueueData>({
+    menu: "music-queue",
+    params: {
+      guildId: ctx.interaction.guildId!,
     },
-    { commandkit: ctx.commandkit }
-  )
+    preloadAll: true,
+    userId: ctx.interaction.user.id,
+  })
 
-  // await ctx.interaction.reply({
-  //   content: response,
-  //   flags: [ MessageFlags.Ephemeral ],
-  // })
+  const components = await menu.render()
+
+  console.log(menu)
+
+  await ctx.interaction.reply({
+    components: [ components ],
+    flags: [ MessageFlags.Ephemeral, MessageFlags.IsComponentsV2 ],
+  })
 }
 
 export const message: MessageCommand = async ctx => {

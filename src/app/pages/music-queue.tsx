@@ -1,13 +1,24 @@
 import { TextDisplay } from "commandkit"
 import { getLavalinkManager } from "commandkit-plugin-lavalink-client"
-import type { BaseBuildCtx, PageDefinition } from "commandkit-plugin-pagination"
+import { paginationMenu, type MenuData } from "commandkit-plugin-pagination"
 import { Track, UnresolvedTrack } from "lavalink-client"
 
-export interface MusicParams {
-  guildId: string
-}
-
 export type TrackLike = Track | UnresolvedTrack
+
+export interface MusicQueueData extends MenuData {
+  params: {
+    guildId: string
+  }
+  item: Track | UnresolvedTrack
+  session: {
+    playerInfo: {
+      isPaused: boolean
+      volume: number
+      currentTrack: (Track | UnresolvedTrack) | null
+    }
+    lastUpdated: Date
+  }
+}
 
 const testData: TrackLike[] = [
   { info: { title: "Sample Track 1" } } as Track,
@@ -42,28 +53,54 @@ const testData: TrackLike[] = [
   { info: { title: "Sample Track 10" } } as Track,
 ]
 
-const musicQueuePage: PageDefinition<MusicParams, TrackLike> = {
+export default paginationMenu<MusicQueueData>({
   name: "music-queue",
+  color: "#ffeed9",
   perPage: 5,
 
-  async build(_base: BaseBuildCtx, _params: MusicParams) {
-    // if you need to warm caches or wire listeners for this static page, do it here
-  },
-
-  async fetch({ guildId }) {
+  async fetch(params) {
     const manager = getLavalinkManager()
-    const player = manager.getPlayer(guildId)
-    // return player ? player.queue.tracks : []
-    return testData
+    const player = manager.getPlayer(params.guildId)
+    return player ? player.queue.tracks : testData
   },
 
-  async renderItem(track, index, pageIndex) {
-    return <TextDisplay content={`#${index + 1} • ${track.info.title}`} />
+  async onSessionStart(params) {
+    const manager = getLavalinkManager()
+    const player = manager.getPlayer(params.guildId)
+
+    return {
+      playerInfo: {
+        isPaused: player?.paused ?? false,
+        volume: player?.volume ?? 100,
+        currentTrack: player?.queue.current ?? null,
+      },
+      lastUpdated: new Date(),
+    }
   },
 
-  async renderTitle({ guildId }) {
-    return <TextDisplay content={`🎵 Queue for ${guildId}`} />
-  },
-}
+  async renderItem(item, index, pageIndex, ctx) {
+    const { playerInfo } = ctx.sessionData
+    const isPlaying = playerInfo.currentTrack?.info.title === item.info.title
 
-export default musicQueuePage
+    return <TextDisplay content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`} />
+  },
+
+  async renderTitle(ctx) {
+    const { playerInfo } = ctx.sessionData
+    return <TextDisplay content={`🎵 Queue ${playerInfo.isPaused ? "⏸️" : "▶️"}`} />
+  },
+
+  // async onInteraction(interactionId, data, ctx) {
+  //   if (interactionId === "toggle-pause") {
+  //     ctx.updateSessionData(current => ({
+  //       ...current,
+  //       playerInfo: {
+  //         ...current.playerInfo,
+  //         isPaused: !current.playerInfo.isPaused,
+  //       },
+  //     }))
+  //     return { type: "render" }
+  //   }
+  //   return { type: "render" }
+  // },
+})
