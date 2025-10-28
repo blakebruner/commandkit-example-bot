@@ -1,7 +1,7 @@
 import { TextDisplay } from "commandkit"
 import { getLavalinkManager } from "commandkit-plugin-lavalink-client"
-import { paginationMenu, type MenuData } from "commandkit-plugin-pagination"
-import { Track, UnresolvedTrack } from "lavalink-client"
+import { type MenuData, paginationMenu } from "commandkit-plugin-pagination"
+import type { Track, UnresolvedTrack } from "lavalink-client"
 
 export type TrackLike = Track | UnresolvedTrack
 
@@ -9,12 +9,12 @@ export interface MusicQueueData extends MenuData {
   params: {
     guildId: string
   }
-  item: Track | UnresolvedTrack
+  item: TrackLike
   session: {
     playerInfo: {
       isPaused: boolean
       volume: number
-      currentTrack: (Track | UnresolvedTrack) | null
+      currentTrack: TrackLike | null
     }
     lastUpdated: Date
   }
@@ -50,7 +50,7 @@ const testData: TrackLike[] = [
   { info: { title: "Sample Track 7" } } as Track,
   { info: { title: "Sample Track 8" } } as Track,
   { info: { title: "Sample Track 9" } } as Track,
-  { info: { title: "Sample Track 10" } } as Track,
+  { info: { title: "Sample Track 10" } } as Track
 ]
 
 export default paginationMenu<MusicQueueData>({
@@ -72,9 +72,9 @@ export default paginationMenu<MusicQueueData>({
       playerInfo: {
         isPaused: player?.paused ?? false,
         volume: player?.volume ?? 100,
-        currentTrack: player?.queue.current ?? null,
+        currentTrack: player?.queue.current ?? null
       },
-      lastUpdated: new Date(),
+      lastUpdated: new Date()
     }
   },
 
@@ -82,13 +82,19 @@ export default paginationMenu<MusicQueueData>({
     const { playerInfo } = ctx.sessionData
     const isPlaying = playerInfo.currentTrack?.info.title === item.info.title
 
-    return <TextDisplay content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`} />
+    return (
+      <TextDisplay
+        content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`}
+      />
+    )
   },
 
   async renderTitle(ctx) {
     const { playerInfo } = ctx.sessionData
-    return <TextDisplay content={`🎵 Queue ${playerInfo.isPaused ? "⏸️" : "▶️"}`} />
-  },
+    return (
+      <TextDisplay content={`🎵 Queue ${playerInfo.isPaused ? "⏸️" : "▶️"}`} />
+    )
+  }
 
   // async onInteraction(interactionId, data, ctx) {
   //   if (interactionId === "toggle-pause") {

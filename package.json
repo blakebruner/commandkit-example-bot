@@ -12,13 +12,9 @@
     "use:local": "bun remove commandkit-plugin-pagination && bun add ../_packs/commandkit-plugin-pagination-*.tgz"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^5.4.0",
+    "@biomejs/biome": "2.3.1",
     "@types/node": "^24.7.2",
-    "eslint": "^9.37.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.1"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "commandkit": "^1.2.0-rc.12",

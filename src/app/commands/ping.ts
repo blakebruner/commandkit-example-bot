@@ -1,11 +1,11 @@
 import type { ChatInputCommand, CommandData, MessageCommand } from "commandkit"
 import { menuManager } from "commandkit-plugin-pagination"
 import { MessageFlags } from "discord.js"
-import { MusicQueueData } from "../pages/music-queue"
+import type { MusicQueueData } from "../pages/music-queue"
 
 export const command: CommandData = {
   name: "ping",
-  description: "Ping the bot to check if it's online.",
+  description: "Ping the bot to check if it's online."
 }
 
 export const chatInput: ChatInputCommand = async ctx => {
@@ -15,10 +15,10 @@ export const chatInput: ChatInputCommand = async ctx => {
   const { sessionId, menu } = await menuManager.createSession<MusicQueueData>({
     menu: "music-queue",
     params: {
-      guildId: ctx.interaction.guildId!,
+      guildId: ctx.interaction.guildId!
     },
     preloadAll: true,
-    userId: ctx.interaction.user.id,
+    userId: ctx.interaction.user.id
   })
 
   const components = await menu.render()
@@ -26,8 +26,8 @@ export const chatInput: ChatInputCommand = async ctx => {
   console.log(menu)
 
   await ctx.interaction.reply({
-    components: [ components ],
-    flags: [ MessageFlags.Ephemeral, MessageFlags.IsComponentsV2 ],
+    components: [components],
+    flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
   })
 }
 

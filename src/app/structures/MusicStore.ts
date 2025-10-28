@@ -1,8 +1,7 @@
-import { Redis } from "ioredis"
-import { QueueStoreManager, StoredQueue } from "lavalink-client"
+import type { Redis } from "ioredis"
+import type { QueueStoreManager, StoredQueue } from "lavalink-client"
 
 export class MusicStore implements QueueStoreManager {
-
   private redis: Redis
 
   public constructor(redisClient: Redis) {
@@ -13,7 +12,10 @@ export class MusicStore implements QueueStoreManager {
     return await this.redis.get(this.id(guildId))
   }
 
-  public async set(guildId: string, stringifiedQueueData: StoredQueue | string): Promise<any> {
+  public async set(
+    guildId: string,
+    stringifiedQueueData: StoredQueue | string
+  ): Promise<any> {
     if (typeof stringifiedQueueData !== "string") {
       stringifiedQueueData = JSON.stringify(stringifiedQueueData)
     }
@@ -24,7 +26,9 @@ export class MusicStore implements QueueStoreManager {
     return await this.redis.del(this.id(guildId))
   }
 
-  public async parse(stringifiedQueueData: StoredQueue | string): Promise<Partial<StoredQueue>> {
+  public async parse(
+    stringifiedQueueData: StoredQueue | string
+  ): Promise<Partial<StoredQueue>> {
     if (typeof stringifiedQueueData !== "string") {
       return stringifiedQueueData
     }

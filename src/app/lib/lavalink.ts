@@ -1,30 +1,30 @@
 import { setLavalinkManager } from "commandkit-plugin-lavalink-client"
-import { Client } from "discord.js"
+import type { Client } from "discord.js"
 import { LavalinkManager } from "lavalink-client"
 import { MusicStore } from "../structures/MusicStore"
 import redis from "./redis"
 
 export function startLavalink(client: Client) {
-
   const lavalink = new LavalinkManager({
     nodes: [
       {
         authorization: process.env.LAVALINK_SERVER_PASSWORD!,
         host: process.env.LAVALINK_HOST!,
         port: 2333,
-        id: "main",
-      },
+        id: "main"
+      }
     ],
-    sendToShard: (guildId, payload) => client.guilds.cache.get(guildId)?.shard?.send(payload),
+    sendToShard: (guildId, payload) =>
+      client.guilds.cache.get(guildId)?.shard?.send(payload),
     autoSkip: true,
     client: {
       id: "1417269992285540515",
-      username: "Commandkit Example",
+      username: "Commandkit Example"
     },
     queueOptions: {
       maxPreviousTracks: 10,
-      queueStore: new MusicStore(redis),
-    },
+      queueStore: new MusicStore(redis)
+    }
   })
 
   setLavalinkManager(lavalink)
