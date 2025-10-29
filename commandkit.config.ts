@@ -1,10 +1,7 @@
-import { lavalinkClient } from "commandkit-plugin-lavalink-client"
-import { pagination } from "commandkit-plugin-pagination"
 import { defineConfig } from "commandkit/config"
+import { lavalinkClient } from "commandkit-plugin-lavalink-client"
+import { menu } from "commandkit-plugin-menu"
 
 export default defineConfig({
-  plugins: [
-    pagination(),
-    lavalinkClient(),
-  ],
+  plugins: [menu(), lavalinkClient()]
 })

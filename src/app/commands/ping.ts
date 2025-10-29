@@ -1,7 +1,7 @@
 import type { ChatInputCommand, CommandData, MessageCommand } from "commandkit"
-import { menuManager } from "commandkit-plugin-pagination"
+import { menuManager } from "commandkit-plugin-menu"
 import { MessageFlags } from "discord.js"
-import type { MusicQueueData } from "../pages/music-queue"
+import type { MusicQueueData } from "../menus/music-queue"
 
 export const command: CommandData = {
   name: "ping",
@@ -12,13 +12,13 @@ export const chatInput: ChatInputCommand = async ctx => {
   // const latency = (ctx.client.ws.ping ?? -1).toString()
   // const response = `Pong! Latency: ${latency}ms`
 
-  const { sessionId, menu } = await menuManager.createSession<MusicQueueData>({
+  const menu = await menuManager.createSession<MusicQueueData>({
     menu: "music-queue",
+    interaction: ctx.interaction,
     params: {
       guildId: ctx.interaction.guildId!
     },
     preloadAll: true,
-    userId: ctx.interaction.user.id
   })
 
   const components = await menu.render()

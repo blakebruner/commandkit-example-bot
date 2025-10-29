@@ -1,6 +1,7 @@
-import { TextDisplay } from "commandkit"
+import { Button, Section, Separator, TextDisplay } from "commandkit"
 import { getLavalinkManager } from "commandkit-plugin-lavalink-client"
-import { type MenuData, paginationMenu } from "commandkit-plugin-pagination"
+import { type MenuData, paginationMenu } from "commandkit-plugin-menu"
+import { ButtonStyle } from "discord.js"
 import type { Track, UnresolvedTrack } from "lavalink-client"
 
 export type TrackLike = Track | UnresolvedTrack
@@ -58,6 +59,10 @@ export default paginationMenu<MusicQueueData>({
   color: "#ffeed9",
   perPage: 5,
 
+  createKey(params) {
+    return `${this.name}|${params.guildId}`
+  },
+
   async fetch(params) {
     const manager = getLavalinkManager()
     const player = manager.getPlayer(params.guildId)
@@ -83,9 +88,15 @@ export default paginationMenu<MusicQueueData>({
     const isPlaying = playerInfo.currentTrack?.info.title === item.info.title
 
     return (
-      <TextDisplay
-        content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`}
-      />
+      <>
+        <Separator />
+        <Section>
+          <TextDisplay
+            content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`}
+          />
+          <Button style={ButtonStyle.Primary} label={"Ping"} customId={`ping`} />
+        </Section>
+      </>
     )
   },
 
@@ -94,19 +105,12 @@ export default paginationMenu<MusicQueueData>({
     return (
       <TextDisplay content={`🎵 Queue ${playerInfo.isPaused ? "⏸️" : "▶️"}`} />
     )
+  },
+
+  actions: {
+    ping: async (ctx) => {
+      console.log("Ping button clicked!", ctx)
+    }
   }
 
-  // async onInteraction(interactionId, data, ctx) {
-  //   if (interactionId === "toggle-pause") {
-  //     ctx.updateSessionData(current => ({
-  //       ...current,
-  //       playerInfo: {
-  //         ...current.playerInfo,
-  //         isPaused: !current.playerInfo.isPaused,
-  //       },
-  //     }))
-  //     return { type: "render" }
-  //   }
-  //   return { type: "render" }
-  // },
 })
