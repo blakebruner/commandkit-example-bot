@@ -59,6 +59,10 @@ export default paginationMenu<MusicQueueData>({
   color: "#ffeed9",
   perPage: 5,
 
+  sessionOptions: {
+    ephemeral: true,
+  },
+
   createKey(params) {
     return `${this.name}|${params.guildId}`
   },
@@ -93,6 +97,9 @@ export default paginationMenu<MusicQueueData>({
         <Section>
           <TextDisplay
             content={`${isPlaying ? "▶️" : ""}#${index + 1} • ${item.info.title}`}
+          />
+          <TextDisplay
+            content={`Volume: ${playerInfo.volume}`}
           />
           <Button style={ButtonStyle.Primary} label={"Ping"} customId={`ping`} />
         </Section>

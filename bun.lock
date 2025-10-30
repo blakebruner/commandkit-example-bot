@@ -237,7 +237,7 @@
 
     "commandkit-plugin-lavalink-client": ["commandkit-plugin-lavalink-client@1.0.7", "", {}, "sha512-G4m44n7y3hgPuPzZwTPb6LYYd4EQgrB8SJW/Hhg4FwiQUvvO7uXicoyfCy+RLR0QlJ4ygx5xK+PEfvECWKUmaQ=="],
 
-    "commandkit-plugin-menu": ["commandkit-plugin-menu@../_packs/commandkit-plugin-menu-0.1.0.tgz", { "dependencies": { "@types/lodash": "^4.17.20", "lodash": "^4.17.21" }, "peerDependencies": { "commandkit": "^1.2.0-rc.11", "discord.js": "^14.22.1" } }],
+    "commandkit-plugin-menu": ["commandkit-plugin-menu@../_packs/commandkit-plugin-menu-0.1.0.tgz", { "dependencies": { "@types/lodash": "^4.17.20", "ioredis": "^5.8.2", "lodash": "^4.17.21" }, "peerDependencies": { "commandkit": "^1.2.0-rc.11", "discord.js": "^14.22.1" } }],
 
     "convert-source-map": ["convert-source-map@2.0.0", "", {}, "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg=="],
 

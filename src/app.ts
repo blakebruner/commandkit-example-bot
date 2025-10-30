@@ -1,3 +1,4 @@
+import { MemoryQueueDriver, setQueueDriver } from "commandkit-plugin-menu"
 import { Client, GatewayIntentBits } from "discord.js"
 import { startLavalink } from "./app/lib/lavalink"
 
@@ -6,9 +7,11 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
+    GatewayIntentBits.MessageContent
+  ]
 })
+
+setQueueDriver(new MemoryQueueDriver())
 
 startLavalink(client)
 

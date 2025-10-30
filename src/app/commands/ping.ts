@@ -1,5 +1,6 @@
 import type { ChatInputCommand, CommandData, MessageCommand } from "commandkit"
-import { menuManager } from "commandkit-plugin-menu"
+import { getLavalinkManager } from "commandkit-plugin-lavalink-client"
+import { menuManager, menuQueue } from "commandkit-plugin-menu"
 import { MessageFlags } from "discord.js"
 import type { MusicQueueData } from "../menus/music-queue"
 
@@ -18,17 +19,45 @@ export const chatInput: ChatInputCommand = async ctx => {
     params: {
       guildId: ctx.interaction.guildId!
     },
-    preloadAll: true,
+    preloadAll: true
   })
 
   const components = await menu.render()
 
-  console.log(menu)
+  // console.log(menu)
 
-  await ctx.interaction.reply({
+  const message = await ctx.interaction.reply({
     components: [components],
     flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2]
   })
+
+  await menu.updateMessageContext(ctx.interaction.user.id, message, ctx.interaction)
+
+  setTimeout(async () => {
+    await menuQueue.sendUpdate<MusicQueueData>({
+      menu: "music-queue",
+      params: {
+        guildId: ctx.interaction.guildId!
+      },
+      refresh: {
+        items: true,
+      },
+      updateSessionData: () => {
+        const manager = getLavalinkManager()
+        const player = manager.getPlayer(ctx.interaction.guildId!)
+
+        return {
+          playerInfo: {
+            isPaused: true,
+            volume: 50,
+            currentTrack: player?.queue.current ?? null
+          },
+          lastUpdated: new Date()
+        }
+      }
+    })
+  }, 5 * 1000)
+
 }
 
 export const message: MessageCommand = async ctx => {
