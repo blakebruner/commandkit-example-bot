@@ -58,6 +58,7 @@ export default paginationMenu<MusicQueueData>({
   name: "music-queue",
   color: "#ffeed9",
   perPage: 5,
+  preloadAll: true,
 
   sessionOptions: {
     ephemeral: true,
@@ -111,6 +112,12 @@ export default paginationMenu<MusicQueueData>({
     const { playerInfo } = ctx.sessionData
     return (
       <TextDisplay content={`🎵 Queue ${playerInfo.isPaused ? "⏸️" : "▶️"}`} />
+    )
+  },
+
+  async renderFooter(ctx) {
+    return (
+      <Separator />
     )
   },
 

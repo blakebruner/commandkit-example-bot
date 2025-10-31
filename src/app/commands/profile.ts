@@ -1,4 +1,5 @@
 import type { ChatInputCommand, CommandData } from "commandkit"
+import { MessageFlags } from "discord.js"
 
 export const command: CommandData = {
   name: "profile",
@@ -6,21 +7,12 @@ export const command: CommandData = {
 }
 
 export const chatInput: ChatInputCommand = async ctx => {
-  // const pagination = ctx.commandkit.plugins.getPlugin("PaginationPlugin") as PaginationPlugin
+await ctx.interaction.deferReply({
+  flags: [ MessageFlags.Ephemeral ]
+})
 
-  // const sessionKey = `profile:${ctx.interaction.user.id}`
-
-  // await pagination.start<ProfileParams, ProfileData>(
-  //   "profile",
-  //   {
-  //     key: sessionKey,
-  //     response: ctx.interaction,
-  //     params: {
-  //       guildId: ctx.interaction.guildId!,
-  //       user: ctx.interaction.user,
-  //     },
-  //   },
-  //   { commandkit: ctx.commandkit }
-  // )
+setTimeout(async () => {
+  await ctx.interaction.editReply("Loading your profile...")
+}, 2000)
 
 }
