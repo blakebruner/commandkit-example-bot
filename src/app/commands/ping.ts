@@ -18,8 +18,7 @@ export const chatInput: ChatInputCommand = async ctx => {
     interaction: ctx.interaction,
     params: {
       guildId: ctx.interaction.guildId!
-    },
-    preloadAll: true
+    }
   })
 
   const components = await menu.render()
